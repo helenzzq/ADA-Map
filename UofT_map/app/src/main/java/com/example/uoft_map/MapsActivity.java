@@ -42,7 +42,8 @@ public class MapsActivity extends FragmentActivity implements
     private GoogleMap mMap;
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
-    private LatLngBounds ADELAIDE = new LatLngBounds( new LatLng(-35.0, 138.58), new LatLng(-34.9, 138.61));
+    private LatLngBounds ADELAIDE = new LatLngBounds(
+            new LatLng(-35.0, 138.58), new LatLng(-34.9, 138.61));
 //            new LatLng(-43.66, 79.40), new LatLng(-43.65, 79.38));
     private static final int Request_User_Location_Code = 99;
 
