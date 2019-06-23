@@ -29,22 +29,20 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.model.LatLngBounds;
 
-import java.util.ArrayList;
+
+
 
 
 public class MapsActivity extends FragmentActivity implements
         OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener,
-        LocationListener
+        GoogleApiClient.OnConnectionFailedListener
 {
 
     private GoogleMap mMap;
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
-    private LatLngBounds ADELAIDE = new LatLngBounds(
-            new LatLng(-35.0, 138.58), new LatLng(-34.9, 138.61));
-//            new LatLng(-43.66, 79.40), new LatLng(-43.65, 79.38));
+        private LatLng UofT = new LatLng(43.662891, -79.395653);
     private static final int Request_User_Location_Code = 99;
 
 
@@ -84,8 +82,11 @@ public class MapsActivity extends FragmentActivity implements
         {
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(43.6644, -79.3923),15));
+
         }
-        mMap.setLatLngBoundsForCameraTarget(ADELAIDE);
+
+        checkLocationPermission();
 
     }
 
@@ -93,7 +94,6 @@ public class MapsActivity extends FragmentActivity implements
     // Create a new client
     protected synchronized void buildGoogleApiClient()
     {
-
         googleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -101,8 +101,6 @@ public class MapsActivity extends FragmentActivity implements
                 .build();
 
         googleApiClient.connect();
-
-
     }
 
 
@@ -137,22 +135,7 @@ public class MapsActivity extends FragmentActivity implements
         }
     }
 
-    @Override
-    public void onLocationChanged(Location location) {
-                    // Delete previous Marker
 
-            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-
-            // camara move
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-            mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
-
-
-            if (googleApiClient != null) {
-                LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
-            }
-
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
@@ -188,11 +171,6 @@ public class MapsActivity extends FragmentActivity implements
         locationRequest.setFastestInterval(1100);
         locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
-        {
-            LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient,locationRequest,this);
-
-        }
     }
 
     @Override
