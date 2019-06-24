@@ -6,8 +6,15 @@ import java.util.List;
 public class LocsManager {
     private List<Loc> LocManager;
 
-    public LocsManager() {
-        LocManager = new ArrayList<Loc>();
+
+
+    public List<Loc> getLocsManger(){
+        if (LocManager == null){
+            return new ArrayList<>();
+        }
+        else{
+            return this.LocManager;
+        }
     }
 
     public void addLoc (double latitude, double longitude,

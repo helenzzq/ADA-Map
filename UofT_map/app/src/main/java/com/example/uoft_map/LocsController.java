@@ -1,16 +1,12 @@
 package com.example.uoft_map;
 
 public class LocsController {
-    private LocsManager locsManager;
+    private LocsManager locsManager = new LocsManager();
 
     private Loc currentLoaction;
 
-    public LocsController() {
-        this.locsManager = new LocsManager();
-        setUpInfo();
-    }
-
     public LocsManager getLocsManager() {
+        setUpInfo();
         return locsManager;
     }
 
