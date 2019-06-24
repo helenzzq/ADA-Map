@@ -2,6 +2,7 @@ package com.example.uoft_map;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -22,28 +23,26 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.maps.model.LatLngBounds;
+//import com.google.android.gms.maps.model.LatLngBounds;
 
-import java.util.ArrayList;
+
+
 
 
 public class MapsActivity extends FragmentActivity implements
         OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener,
-        LocationListener
+        GoogleApiClient.OnConnectionFailedListener
 {
 
     private GoogleMap mMap;
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
-    private LatLngBounds ADELAIDE = new LatLngBounds( new LatLng(-35.0, 138.58), new LatLng(-34.9, 138.61));
-//            new LatLng(-43.66, 79.40), new LatLng(-43.65, 79.38));
     private static final int Request_User_Location_Code = 99;
 
 
@@ -66,7 +65,6 @@ public class MapsActivity extends FragmentActivity implements
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
      * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
      * If Google Play services is not installed on the device, the user will be prompted to install
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
@@ -83,16 +81,47 @@ public class MapsActivity extends FragmentActivity implements
         {
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(43.6644, -79.3923),15));
+            mMap.setOnMyLocationButtonClickListener(onMyLocationButtonClickListener);
+            mMap.setOnMyLocationClickListener(onMyLocationClickListener);
+
         }
-        mMap.setLatLngBoundsForCameraTarget(ADELAIDE);
+
+        checkLocationPermission();
 
     }
+    // rewrite get_location button and set zoom
+    private GoogleMap.OnMyLocationButtonClickListener onMyLocationButtonClickListener =
+            new GoogleMap.OnMyLocationButtonClickListener() {
+                @Override
+                public boolean onMyLocationButtonClick() {
+                    mMap.setMinZoomPreference(16);
+                    return false;
+                }
+            };
+    private GoogleMap.OnMyLocationClickListener onMyLocationClickListener =
+            new GoogleMap.OnMyLocationClickListener() {
+                @Override
+                public void onMyLocationClick(@NonNull Location location) {
+
+                    mMap.setMinZoomPreference(16);
+
+                    CircleOptions circleOptions = new CircleOptions();
+                    circleOptions.center(new LatLng(location.getLatitude(),
+                            location.getLongitude()));
+
+                    circleOptions.radius(200);
+                    circleOptions.fillColor(Color.BLUE);
+                    circleOptions.strokeWidth(6);
+
+                    mMap.addCircle(circleOptions);
+                }
+            };
 
 
     // Create a new client
     protected synchronized void buildGoogleApiClient()
     {
-
         googleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -100,8 +129,6 @@ public class MapsActivity extends FragmentActivity implements
                 .build();
 
         googleApiClient.connect();
-
-
     }
 
 
@@ -136,22 +163,7 @@ public class MapsActivity extends FragmentActivity implements
         }
     }
 
-    @Override
-    public void onLocationChanged(Location location) {
-                    // Delete previous Marker
 
-            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-
-            // camara move
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-            mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
-
-
-            if (googleApiClient != null) {
-                LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
-            }
-
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
@@ -187,11 +199,6 @@ public class MapsActivity extends FragmentActivity implements
         locationRequest.setFastestInterval(1100);
         locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
-        {
-            LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient,locationRequest,this);
-
-        }
     }
 
     @Override
