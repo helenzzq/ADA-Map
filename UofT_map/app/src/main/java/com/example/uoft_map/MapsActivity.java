@@ -2,6 +2,7 @@ package com.example.uoft_map;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -22,12 +23,12 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.maps.model.LatLngBounds;
+//import com.google.android.gms.maps.model.LatLngBounds;
 
 
 
@@ -83,12 +84,41 @@ public class MapsActivity extends FragmentActivity implements
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(43.6644, -79.3923),15));
+            mMap.setOnMyLocationButtonClickListener(onMyLocationButtonClickListener);
+            mMap.setOnMyLocationClickListener(onMyLocationClickListener);
 
         }
 
         checkLocationPermission();
 
     }
+    // rewrite get_location button and set zoom
+    private GoogleMap.OnMyLocationButtonClickListener onMyLocationButtonClickListener =
+            new GoogleMap.OnMyLocationButtonClickListener() {
+                @Override
+                public boolean onMyLocationButtonClick() {
+                    mMap.setMinZoomPreference(16);
+                    return false;
+                }
+            };
+    private GoogleMap.OnMyLocationClickListener onMyLocationClickListener =
+            new GoogleMap.OnMyLocationClickListener() {
+                @Override
+                public void onMyLocationClick(@NonNull Location location) {
+
+                    mMap.setMinZoomPreference(16);
+
+                    CircleOptions circleOptions = new CircleOptions();
+                    circleOptions.center(new LatLng(location.getLatitude(),
+                            location.getLongitude()));
+
+                    circleOptions.radius(200);
+                    circleOptions.fillColor(Color.BLUE);
+                    circleOptions.strokeWidth(6);
+
+                    mMap.addCircle(circleOptions);
+                }
+            };
 
 
     // Create a new client
