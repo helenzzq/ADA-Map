@@ -1,6 +1,7 @@
 package com.example.uoft_map;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -11,6 +12,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 
@@ -58,8 +61,25 @@ public class MapsActivity extends FragmentActivity implements
         mapFragment.getMapAsync(this);
 
         checkLocationPermission();
+        goToSearchAct();
 
     }
+
+    /**
+     * Activate button to go to score board activity.
+     */
+    private void goToSearchAct(){
+        Button srch_btn = findViewById(R.id.srch_btn);
+        srch_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent searchAct = new Intent(MapsActivity.this,
+                        SearchActivity.class);
+                startActivity(searchAct);
+            }
+        });
+    }
+
 
     /**
      * Manipulates the map once available.
