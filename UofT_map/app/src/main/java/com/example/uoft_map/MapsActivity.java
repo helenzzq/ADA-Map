@@ -43,7 +43,6 @@ public class MapsActivity extends FragmentActivity implements
     private GoogleMap mMap;
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
-        private LatLng UofT = new LatLng(43.662891, -79.395653);
     private static final int Request_User_Location_Code = 99;
 
 
@@ -66,7 +65,6 @@ public class MapsActivity extends FragmentActivity implements
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
      * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
      * If Google Play services is not installed on the device, the user will be prompted to install
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
