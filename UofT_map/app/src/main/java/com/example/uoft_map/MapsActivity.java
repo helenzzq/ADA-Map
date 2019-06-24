@@ -164,14 +164,14 @@ public class MapsActivity extends FragmentActivity implements
         }
     }
 
-    public void add_marker(Loc curr){
-        //set marker
-        MarkerOptions markerOptions = new MarkerOptions();
-        LatLng latLng = new LatLng(curr.latitude(), curr.longtitude());
-        mMap.addMarker(markerOptions.position(latLng).title(curr.abs));
-
-
-    }
+//    public void add_marker(Loc curr){
+//        //set marker
+//        MarkerOptions markerOptions = new MarkerOptions();
+//        LatLng latLng = new LatLng(curr.latitude(), curr.longtitude());
+//        mMap.addMarker(markerOptions.position(latLng).title(curr.abs));
+//
+//
+//    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
