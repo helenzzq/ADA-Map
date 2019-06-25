@@ -54,7 +54,14 @@ public class MapsActivity extends FragmentActivity implements
     //ToDo: 1. 目的：改良code structure。 创建一个MapController 的Java 并且把所有调用google map的function放进去.
     //ToDo: 2. 目的：处理搜索结果。在搜索结果出来之后，处理data。
         //todo 2.1 -- 根据搜索界面返回的数值创建Loc，或者直接获取Loc Class 具体传递方法未定。
-        //todo 2.2 -- 在Loc 有了的情况下，根据 Loc 的坐标 设置一个marker 并显示出来。
+
+    //todo 2.2 -- 在Loc 有了的情况下，根据 Loc 的坐标 设置一个marker 并显示出来。
+    public void add_marker(Loc curr) {
+        //set marker
+        MarkerOptions markerOptions = new MarkerOptions();
+        LatLng latLng = new LatLng(curr.getLatitude(), curr.getLongitude());
+        mMap.addMarker(markerOptions.position(latLng).title(curr.getAbsName()));
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
