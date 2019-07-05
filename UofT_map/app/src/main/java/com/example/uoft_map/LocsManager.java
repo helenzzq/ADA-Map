@@ -4,29 +4,47 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LocsManager {
-    private List<Loc> LocManager;
 
+    private List<Loc> ItemList;
 
+    public LocsManager(){
+       ItemList = new ArrayList<>();
+    }
 
-    public List<Loc> getLocsManger(){
-        if (LocManager == null){
-            return new ArrayList<>();
-        }
-        else{
-            return this.LocManager;
-        }
+    public List<Loc> getItemList(){
+        return ItemList;
     }
 
     public void addLoc (double latitude, double longitude,
                         String fullName, String absName, String address){
-        Loc addItem = new Loc(latitude, longitude, fullName, absName, address);
-        LocManager.add(addItem);
+        if(!searchloc(fullName)){
+            Loc addItem = new Loc(latitude, longitude, fullName, absName, address);
+            ItemList.add(addItem);
+        }
+    }
+
+    // search whether fullname location is in the list
+    private boolean searchloc(String fullName){
+        for(Loc locations: ItemList){
+            if(locations.getFullName().equals(fullName)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public List<String> getfullNameList(){
+        List<String> re_list = new ArrayList<>();
+        for(Loc locations: ItemList){
+            re_list.add(locations.getFullName());
+        }
+        return re_list;
     }
 
     public void deleteLoc (String fullName){
-        for(Loc locations: LocManager){
+        for(Loc locations: ItemList){
               if(locations.getFullName().equals(fullName)){
-                  LocManager.remove(locations);
+                  ItemList.remove(locations);
               }
         }
     }

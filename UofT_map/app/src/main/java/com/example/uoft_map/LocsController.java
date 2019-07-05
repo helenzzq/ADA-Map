@@ -1,14 +1,23 @@
 package com.example.uoft_map;
 
+import java.util.List;
+
 public class LocsController {
-    private LocsManager locsManager = new LocsManager();
+    public static LocsManager locsManager;
 
     private Loc currentLoaction;
 
+    public LocsController() {
+        if(locsManager == null){
+            locsManager = new LocsManager();
+            setUpInfo();
+        }
+    }
+
     public LocsManager getLocsManager() {
-        setUpInfo();
         return locsManager;
     }
+
 
     private void setUpInfo(){
         locsManager.addLoc(43.657,-79.397,"Bahen Center", "BA",

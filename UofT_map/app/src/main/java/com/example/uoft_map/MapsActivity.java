@@ -47,6 +47,8 @@ public class MapsActivity extends FragmentActivity implements
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
     private static final int Request_User_Location_Code = 99;
+    public static LocsController LC = new LocsController();
+    public Loc currentLocation = LC.getCurrentLoaction();
 
 
 
@@ -54,6 +56,7 @@ public class MapsActivity extends FragmentActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
 
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
