@@ -11,6 +11,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
@@ -51,7 +53,17 @@ public class MapsActivity extends FragmentActivity implements
     public Loc currentLocation = LC.getCurrentLoaction();
 
 
+    //ToDo: 1. 目的：改良code structure。 创建一个MapController 的Java 并且把所有调用google map的function放进去.
+    //ToDo: 2. 目的：处理搜索结果。在搜索结果出来之后，处理data。
+        //todo 2.1 -- 根据搜索界面返回的数值创建Loc，或者直接获取Loc Class 具体传递方法未定。
 
+    //todo 2.2 -- 在Loc 有了的情况下，根据 Loc 的坐标 设置一个marker 并显示出来。
+    public void add_marker(Loc curr) {
+        //set marker
+        MarkerOptions markerOptions = new MarkerOptions();
+        LatLng latLng = new LatLng(curr.getLatitude(), curr.getLongitude());
+        mMap.addMarker(markerOptions.position(latLng).title(curr.getAbsName()));
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +94,18 @@ public class MapsActivity extends FragmentActivity implements
                 startActivity(searchAct);
             }
         });
+    }
+
+    /**
+     * Change the fragments based on Location.
+     * @param location
+     */
+    public void setLocationFragment(Loc location){
+        //ToDo 3： 在搜索返回后，在用户点击了地图上的图标时（如BA 的marker）invoke 此function 并且把Loc class 传递进去此fragment
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+        transaction.replace(R.id.LocationFrame, new MapLocationFragment());
+        transaction.commit();
     }
 
 
@@ -186,8 +210,6 @@ public class MapsActivity extends FragmentActivity implements
             return true;
         }
     }
-
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
