@@ -1,9 +1,13 @@
 package com.example.uoft_map;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -41,6 +45,16 @@ public class SearchActivity extends AppCompatActivity {
             public boolean onQueryTextChange(String newText) {
                 adapter.getFilter().filter(newText);
                 return false;
+            }
+        });
+        myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String name = myList.getItemAtPosition(position).toString();
+                Loc foundItem = MapsActivity.LC.getLocsManager().getLocByFullName(name);
+                MapsActivity.LC.setCurrentLoaction(foundItem);
+                Intent intent = new Intent(SearchActivity.this, MapsActivity.class);
+                startActivity(intent);
             }
         });
 

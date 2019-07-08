@@ -49,5 +49,14 @@ public class LocsManager {
         }
     }
 
+    public Loc getLocByFullName(String findFullName){
+        for(Loc locations: ItemList){
+            if(locations.getFullName().equals(findFullName)){
+                return locations;
+            }
+        }
+        return null;
+    }
+
 
 }
