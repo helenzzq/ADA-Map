@@ -2,11 +2,9 @@ package com.example.uoft_map;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -19,9 +17,7 @@ import android.widget.Toast;
 
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -31,8 +27,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-import java.util.Map;
-//import com.google.android.gms.maps.model.LatLngBounds;
 
 public class MapController implements
         GoogleApiClient.ConnectionCallbacks,
@@ -140,22 +134,6 @@ public class MapController implements
             return true;
         }
     }
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case Request_User_Location_Code:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if (ContextCompat.checkSelfPermission(mp_act, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                        mMap.setMyLocationEnabled(true);
-                    }
-                } else {
-                    Toast.makeText(mp_act, "TAT...Permission denied", Toast.LENGTH_SHORT).show();
-                }
-        }
-
-    }
-
-
-
 
     // whenever it's connceted
     @Override
