@@ -58,6 +58,7 @@ public class MapsActivity extends FragmentActivity implements
         //todo 2.1 -- 根据搜索界面返回的数值创建Loc，或者直接获取Loc Class 具体传递方法未定。
 
     //todo 2.2 -- 在Loc 有了的情况下，根据 Loc 的坐标 设置一个marker 并显示出来。
+
     public void add_marker(Loc curr) {
         //set marker
         MarkerOptions markerOptions = new MarkerOptions();

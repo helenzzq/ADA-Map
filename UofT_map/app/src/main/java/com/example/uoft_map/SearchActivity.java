@@ -30,7 +30,7 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        mySearchView = (SearchView)findViewById(R.id.search);
+        mySearchView = findViewById(R.id.searching);
         myList = findViewById(R.id.listsearch);
 
         adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,exampleList);

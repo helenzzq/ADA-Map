@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <SearchView
-        android:id="@+id/search"
+        android:id="@+id/searching"
         android:layout_width="368dp"
         android:layout_height="79dp"
         android:layout_marginStart="8dp"
