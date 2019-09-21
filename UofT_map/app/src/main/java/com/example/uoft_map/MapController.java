@@ -36,10 +36,12 @@ public class MapController implements
     public LocationRequest locRequest;
     public Activity mp_act;
     public Loc currentLocation ;
+    public Marker previousMarker;
 
     public void Maps(GoogleMap map, Activity mp_act) {
         this.mMap = map;
         this.mp_act = mp_act;
+        this.previousMarker = null;
     }
 
     public void init_map() {
@@ -50,18 +52,17 @@ public class MapController implements
             mMap.setOnMyLocationClickListener(onMyLocationClickListener);
 //            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
 //                @Override
-//                public boolean onMarkerClick(Marker marker) {
-//                    String locAddress = marker.getTitle();
-//                    fillTextViews(locAddress);
-//                    if (previousMarker != null) {
-//                        previousMarker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-//                    }
-//                    marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-//                    previousMarker = marker;
-//
-//                    return true;
+//            public boolean onMarkerClick(Marker marker) {
+////                    String locAddress = marker.getTitle();
+////                    fillTextViews(locAddress);
+//                if (previousMarker != null) {
+//                    previousMarker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
 //                }
-//            });
+//                previousMarker = marker;
+//
+//                return true;
+//            }
+//        });
 
         }
         else {
@@ -103,9 +104,9 @@ public class MapController implements
         //set marker
         currentLocation = MapsActivity.LC.getCurrentLoaction();
         if (currentLocation != null){
-            MarkerOptions markerOptions = new MarkerOptions();
             LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-            mMap.addMarker(markerOptions.position(latLng).title(currentLocation.getAbsName()));
+            MarkerOptions markOptions = new MarkerOptions().position(latLng).title(currentLocation.getAbsName());
+            previousMarker = mMap.addMarker(markOptions);
         }
 
 
