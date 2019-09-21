@@ -23,6 +23,7 @@ public class MapLocationFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         //ToDo 1 需要从Activity 里面获取（Loc）location， 并通过location的info来更改此fragment的default strings
+
         view = inflater.inflate(R.layout.fragment_map_location, container, false);
         navButtonListener();
         FragSetString(location);

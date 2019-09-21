@@ -7,11 +7,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.location.LocationRequest;
@@ -20,7 +21,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.common.api.GoogleApiClient;
-//import com.google.android.gms.maps.model.LatLngBounds;
+
 
 
 
@@ -32,20 +33,15 @@ public class MapsActivity extends FragmentActivity implements
         GoogleApiClient.OnConnectionFailedListener
 {
 
-    private GoogleMap mMap;
+    public GoogleMap mMap;
     private GoogleApiClient googleApiClient;
     private LocationRequest locRequest;
     private static final int Request_User_Location_Code = 99;
-    public static LocsController LC = new LocsController();
+
     public static MapController MC = new MapController();
-    public Loc currentLocation = LC.getCurrentLoaction();
+    public static LocsController LC = new LocsController();
 
-    //ToDo: 1. 目的：改良code structure。 创建一个MapController 的Java 并且把所有调用google map的function放进去.
-    //ToDo: 2. 目的：处理搜索结果。在搜索结果出来之后，处理data。
-        //todo 2.1 -- 根据搜索界面返回的数值创建Loc，或者直接获取Loc Class 具体传递方法未定。
-
-    //todo 2.2 -- 在Loc 有了的情况下，根据 Loc 的坐标 设置一个marker 并显示出来。
-    //MC.addmarker()
+    //
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +73,7 @@ public class MapsActivity extends FragmentActivity implements
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        MC.Maps(mMap, currentLocation, this);
+        MC.Maps(mMap, this);
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         //Initialize Google Play Services
         buildGoogleApiClient();
@@ -118,6 +114,8 @@ public class MapsActivity extends FragmentActivity implements
         locRequest.setInterval(1100);
         locRequest.setFastestInterval(1100);
         locRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+
+        MC.add_marker();
 
     }
 

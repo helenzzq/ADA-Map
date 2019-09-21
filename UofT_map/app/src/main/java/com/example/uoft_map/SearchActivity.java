@@ -53,6 +53,7 @@ public class SearchActivity extends AppCompatActivity {
                 String name = myList.getItemAtPosition(position).toString();
                 Loc foundItem = MapsActivity.LC.getLocsManager().getLocByFullName(name);
                 MapsActivity.LC.setCurrentLoaction(foundItem);
+
                 Intent intent = new Intent(SearchActivity.this, MapsActivity.class);
                 startActivity(intent);
             }
