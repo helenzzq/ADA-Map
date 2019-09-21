@@ -27,6 +27,7 @@ public class LocsController {
         locsManager.addLoc(43.66447,-79.399456,"Robarts Library", "RB",
                 "130 St George St, Toronto, ON M5S 1A5\n");
     }
+    //
 
     public Loc getCurrentLoaction() {
         return currentLoaction;
