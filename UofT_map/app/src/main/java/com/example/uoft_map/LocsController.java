@@ -20,7 +20,7 @@ public class LocsController {
 
 
     private void setUpInfo(){
-        locsManager.addLoc(43.657,-79.397,"Bahen Center", "BA",
+        locsManager.addLoc(43.637,-79.397,"Bahen Center", "BA",
                 "40 St George St, Toronto, ON M5S 2E4\n");
         locsManager.addLoc(43.66,-79.386,"Brennan Hall", "BR",
                 "81 St. Mary Street, Toronto, ON M5S 1J4\n");
